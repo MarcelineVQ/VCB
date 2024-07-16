@@ -888,12 +888,26 @@ end
 
 function VCB_Contains(table, element)
 	for _, value in pairs(table) do
-		if value == element then
+		if strlower(value) == strlower(element) then
 			return true
 		end
 	end
 	return false
 end
+
+-- function VCB_ContainsCI(table, element)
+-- 	for _, value in pairs(table) do
+-- 		if type(value) == "string" and type(element) == "string" then
+-- 			if string.lower(value) == string.lower(element) then
+-- 				return true
+-- 			end
+-- 		end
+-- 		if value == element then
+-- 			return true
+-- 		end
+-- 	end
+-- 	return false
+-- end
 
 function VCB_GetKeys(a, b)
 	local i = 0

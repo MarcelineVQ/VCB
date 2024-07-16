@@ -140,8 +140,14 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 			for p = 1, VCB_tablelength(Banned_Buffs) do
 				if not Banned_Buffs[p] or name == nil then break end
 				if ( strfind(strlower(Banned_Buffs[p]), strlower(name)) ) then
+					for e = 1, VCB_tablelength(Consolidated_Buffs) do
+						if not Consolidated_Buffs[e] or name == nil then break end
+						if strfind(strlower(Consolidated_Buffs[e]), strlower(name)) then
+							VCB_SendMessage(name..VCB_HAS_BEEN_CANCELLED)
+							break
+						end
+					end
 					CancelPlayerBuff(button.buffIndex)
-					VCB_SendMessage(name..VCB_HAS_BEEN_CANCELLED)
 					break
 				end
 			end
@@ -520,7 +526,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	
 	-- Add grayed out icons
 	-- Druid
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_1)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_2)) and VCB_Contains(classes, "DRUID") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_2) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_1)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_1)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_2)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_1)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_2)) and VCB_Contains(classes, "DRUID") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_2) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_1)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon0:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon0:Show()
@@ -530,7 +536,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon0:Hide()
 	end
 	-- Hunter
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_3)) and VCB_Contains(classes, "HUNTER") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_3)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_3)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_3)) and VCB_Contains(classes, "HUNTER") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_3)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon1:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon1:Show()
@@ -540,7 +546,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon1:Hide()
 	end
 	-- Paladin
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_4)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_5)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_5)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_4) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_5)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_4)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_5)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_4)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_5)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_5)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_4) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_5)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon2:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon2:Show()
@@ -549,7 +555,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon2:Hide()
 	end
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_6)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_7)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_7)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_6) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_7)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_6)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_7)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_6)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_7)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_7)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_6) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_7)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon3:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon3:Show()
@@ -558,7 +564,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon3:Hide()
 	end
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_8)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_9)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_9)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_8) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_9)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_8)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_9)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_8)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_9)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_9)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_8) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_9)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon4:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon4:Show()
@@ -567,7 +573,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon4:Hide()
 	end
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_10)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_11)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_11)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_10) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_11)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_10)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_11)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_10)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_11)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_11)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_10) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_11)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon5:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon5:Show()
@@ -576,7 +582,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon5:Hide()
 	end
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_12)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_13)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_13)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_12) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_13)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_12)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_13)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_12)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_13)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_13)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_12) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_13)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon6:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon6:Show()
@@ -586,7 +592,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon6:Hide()
 	end
 	-- Mage
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_14)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_15)) and VCB_Contains(classes, "MAGE") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_14) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_15)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_14)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_15)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_14)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_15)) and VCB_Contains(classes, "MAGE") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_14) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_15)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon7:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon7:Show()
@@ -596,7 +602,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon7:Hide()
 	end
 	-- Priest
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_16)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_17)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_17) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_16)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_16)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_17)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_16)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_17)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_17) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_16)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon8:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon8:Show()
@@ -605,7 +611,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon8:Hide()
 	end
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_18)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_19)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_19) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_18)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_18)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_19)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_18)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_19)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_19) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_18)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon9:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon9:Show()
@@ -614,7 +620,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon9:Hide()
 	end
-	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_20)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_21)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_21) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_20)) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_20)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_21)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_20)) and (not VCB_Contains(Banned_Buffs, VCB_ABILITY_LOWER_SCRIPT_21)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_21) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_20)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon10:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon10:Show()
