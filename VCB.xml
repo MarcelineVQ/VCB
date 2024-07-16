@@ -79,7 +79,7 @@
 	</Slider>
 	
 	---------------------------------MINIMAP FRAME----------------------------------------------------------------
-	<Button name="VCB_BF_MINIMAP_FRAME" movable="true" parent="UIParent" enableMouse="true" toplevel="true" frameStrata="LOW">
+	<Button name="VCB_BF_MINIMAP_FRAME" movable="true" parent="Minimap" enableMouse="true" toplevel="true" frameStrata="LOW">
 		<Size x="33" y="33" />
 		<Anchors>
 			<Anchor point="LEFT" relativeTo="Minimap" relativePoint="LEFT">
