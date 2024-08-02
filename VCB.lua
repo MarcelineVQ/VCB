@@ -887,8 +887,10 @@ function VCB_tablelength(T)
 end
 
 function VCB_Contains(table, element)
+	if type(element) == "string" then element = strlower(element) end
 	for _, value in pairs(table) do
-		if strlower(value) == strlower(element) then
+		if type(value) == "string" then value = strlower(value) end
+		if value == element then
 			return true
 		end
 	end
